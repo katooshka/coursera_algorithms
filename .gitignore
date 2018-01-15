@@ -1,0 +1,6 @@
+.idea/
+.gitignore
+.DS_Store
+coursera_algorithms.iml
+pom.xml
+target/
