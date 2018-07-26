@@ -1,4 +1,4 @@
-//package algorithmic_toolbox;
+package data_structures;//package algorithmic_toolbox;
 
 import java.io.BufferedReader;
 import java.io.IOException;
