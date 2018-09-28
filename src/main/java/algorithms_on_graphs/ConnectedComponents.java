@@ -8,17 +8,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Reachability {
+public class ConnectedComponents {
     private static Map<Integer, Set<Integer>> adjacencyLists = new HashMap<>();
     private static Map<Integer, Boolean> vertexVisited = new HashMap<>();
     private static Map<Integer, Integer> vertexGroupNumber = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
+        int verticesNumber;
         int edgesNumber;
-        int u;
-        int v;
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
             String[] firstLine = br.readLine().split(" ");
+            verticesNumber = Integer.parseInt(firstLine[0]);
             edgesNumber = Integer.parseInt(firstLine[1]);
             for (int i = 0; i < edgesNumber; i++) {
                 String[] edgeString = br.readLine().split(" ");
@@ -31,23 +31,19 @@ public class Reachability {
                 updateAdjacencyLists(firstVertex, secondVertex);
                 updateAdjacencyLists(secondVertex, firstVertex);
             }
-            String[] lastLine = br.readLine().split(" ");
-            u = Integer.parseInt(lastLine[0]);
-            v = Integer.parseInt(lastLine[1]);
         }
-        System.out.println(checkPath(u, v));
+        System.out.println(checkPath(verticesNumber));
     }
 
-    private static int checkPath(int u, int v) {
-        int cc = 1;
+    private static int checkPath(int verticesNumber) {
+        int cc = 0;
         for (Integer vertex : adjacencyLists.keySet()) {
             if (!vertexVisited.get(vertex)) {
                 explore(vertex, cc);
                 cc++;
             }
         }
-        if (!vertexGroupNumber.containsKey(u) || !vertexGroupNumber.containsKey(v)) return 0;
-        return vertexGroupNumber.get(u).equals(vertexGroupNumber.get(v)) ? 1 : 0;
+        return cc + (verticesNumber - adjacencyLists.size());
     }
 
     private static void explore(int vertex, int cc) {
